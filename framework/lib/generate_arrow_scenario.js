@@ -188,7 +188,13 @@ function handleStep(keyword, name, line) {
     });
     var NUM = [];
     step = step.replace(/[+-]?((\d+(\.\d*)?)|\.\d+)([eE][+-]?[0-9]+)?/g,function(num) {
-	    NUM.push(parseInt(num));
+	    if (num.match(/(\.|\d+[eE][+-]?[0-9]+)/)) {
+		    NUM.push(parseFloat(num));
+	    }
+	    else
+	    {
+		    NUM.push(parseInt(num));		
+	    }
         return "$NUM";
     });
 

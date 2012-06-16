@@ -33,3 +33,8 @@ Feature: Simple maths
     When I increment the variable by 1
     Then the variable should contain 2
 
+  @mytest
+  Scenario: floating point number
+    Given a variable set to 5.6e+2
+    When I increment the variable by -5.6e+2
+    Then the variable should contain 0.0e+1
