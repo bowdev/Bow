@@ -5,14 +5,14 @@ var fs = require('fs');
 var path = [];
 var arrow = [];
 if (process.argv.length==2) {
-	console.log("Usage:\t"+process.argv[1]+" [file path] \"[arrow options]\"");
-	console.log("Example:\n\t"+process.argv[1]+" features/greeter.feature \"--group smoke --browser=firefox --report\"");
+	console.log("Usage:\t"+process.argv[1]+" \"[file path]\" \"[arrow options]\"");
+	console.log("Example:\n\t"+process.argv[1]+" \"features/*.feature\" \"--group smoke --browser=firefox --report\"");
 	console.log("\nYou could filter the console log to get the reports.");
-	console.log("Example:\n\t"+process.argv[1]+' features/math.feature "--browser=firefox --report" | grep -E "(\\[BDD\\]|Total Number of|Total Test Execution Time|Report Created)"')
+	console.log("Example:\n\t"+process.argv[1]+' \"features/*.feature\" "--browser=firefox --report" | grep -E "(\\[BDD\\]|Total Number of|Total Test Execution Time|Report Created)"')
 	console.log("\nYou could easily set up a project folder.");
 	console.log("Example:\n\t"+process.argv[1]+' --init [your project folder]');
 	console.log("\nBow can validate its own feature spec. Please run the following command.");
-	console.log("Example:\n\t"+process.argv[1]+" framework/features/bow_spec.feature | grep -o -E \"\\[BDD\\].*$\"");
+	console.log("Example:\n\t"+process.argv[1]+" \"framework/features/*.feature\" | grep -o -E \"\\[BDD\\].*$\"");
 	return;
 }
 if (process.argv.length>2) {
@@ -21,11 +21,29 @@ if (process.argv.length>2) {
 		return;
 	}
 	else {
+		//console.log("The second argv is "+process.argv[2]);
 		path.push(process.argv[2]);		
 	}
 }
 if (process.argv.length>3) arrow.push(process.argv[3]);
 if (path.length>0) {
-  input = fs.readFileSync(path[0],'utf8');
-  generate_arrow_scenario(input,path[0],arrow);
+  var glob = require("glob");
+  var options = {mark: true, sync:true, nocase:true, debug:false, globDebug:true};
+  //var files = glob.sync(path[0], options);
+  var files = glob.sync(path[0]);
+  //console.log("The path is "+path[0]);
+  var count = 0;
+  files.forEach(function(file) {
+    if (file.match(/\.feature/i)) {
+        count++;
+    }
+  });
+  console.log("Processing "+count+" file(s).");
+  files.forEach(function(file) {
+    if (file.match(/\.feature/i)) {
+      console.log("Processing "+file);
+      input = fs.readFileSync(file,'utf8');
+      generate_arrow_scenario(input,file,arrow);
+    }
+  });
 }
