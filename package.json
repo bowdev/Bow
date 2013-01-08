@@ -1,7 +1,7 @@
 {
     "name": "bow",
     "description": "BDD Testing Framework for Arrow",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "homepage": "https://github.com/bowdev/Bow",
     "repository": {
         "type": "git",

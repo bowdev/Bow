@@ -1,4 +1,4 @@
-YUI({ useBrowserConsole: true }).use("test", function(Y) {
+YUI.add("bow-tests", function(Y) {
 
     var A = Y.Assert;
 
@@ -31,4 +31,4 @@ YUI({ useBrowserConsole: true }).use("test", function(Y) {
 
 	// Never "run" the tests, simply add them to the suite. Arrow takes care of running them
 	Y.Test.Runner.add(suite);
-});
+}, "0.1", { requires: ["test", "common"]});

@@ -1,4 +1,4 @@
-YUI({ useBrowserConsole: true }).use("test", "common", function(Y) {
+YUI.add("bow-tests", function(Y) {
     var A = Y.Assert;
 
     //Get access to common.js
@@ -29,4 +29,4 @@ YUI({ useBrowserConsole: true }).use("test", "common", function(Y) {
 
     //Never "run" the tests, simply add them to the suite. Arrow takes care of running them
     Y.Test.Runner.add(suite);
-});
+}, "0.1", { requires: ["arrow", "test", "common"]});
