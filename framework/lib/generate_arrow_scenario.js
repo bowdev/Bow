@@ -220,8 +220,8 @@ function handleStep(keyword, name, line) {
     }
 
     var exist = false;
-    var path = require('path');
-    var exist = path.existsSync(test_home+test_name);
+    var fs = require('fs');
+    var exist = fs.existsSync(test_home+test_name);
     if (!exist) {
       //console.log("Writing "+test_name);
       fs.writeFileSync(test_home+test_name, 
