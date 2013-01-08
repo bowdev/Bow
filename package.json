@@ -1,0 +1,21 @@
+{
+    "name": "bow",
+    "description": "BDD Testing Framework for Arrow",
+    "version": "0.0.1",
+    "homepage": "https://github.com/bowdev/Bow",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/bowdev/Bow.git"
+    },
+    "author": "Ares Huang <aresyhoo@yahoo-inc.com> (https://github.com/bowdev/)",
+    "contributors": [
+    ],
+    "bin": {
+        "bow": "bin/bow.js"
+    },
+    "engines": [ "node >=0.6" ],
+    "dependencies": {
+    },
+    "devDependencies": {
+    }
+}
