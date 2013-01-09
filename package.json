@@ -1,7 +1,7 @@
 {
     "name": "bow",
     "description": "BDD Testing Framework for Arrow",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "homepage": "https://github.com/bowdev/Bow",
     "repository": {
         "type": "git",
@@ -15,7 +15,8 @@
     },
     "engines": [ "node >=0.6" ],
     "dependencies": {
-        "glob": "3.1.14"
+        "glob": "3.1.14",
+        "gherkin": "2.11.5"
     },
     "devDependencies": {
     }
