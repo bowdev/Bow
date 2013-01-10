@@ -24,15 +24,14 @@ exports = module.exports = nano = function init(projectHome) {
   }
   else {
     exec(command("mkdir "+projectHome),puts);
-    delay(10);	
+    delay(100);	
   }
   exec(command("mkdir "+projectHome+"/features"),puts);
-  exec(command("mkdir "+projectHome+"/lib"),puts);
   exec(command("mkdir "+projectHome+"/framework"),puts);
   exec(command("mkdir "+projectHome+"/config"),puts);
-  delay(15);	
+  delay(150);	
   exec(command("mkdir "+projectHome+"/features/step_definitions"),puts);
   exec(command("mkdir "+projectHome+"/features/support"),puts);
-  delay(15);
+  delay(150);
   exec(command("cp -r "+path.resolve(__dirname, '..')+" "+projectHome+"/"),puts);
 }
