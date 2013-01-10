@@ -25,7 +25,7 @@ YUI.add("bow-tests", function(Y) {
 
             if (!pass) Common.step_fail(this);
             else Common.step_pass(this);
-            A.isTrue(pass,"Feature: Parser for Gherkin Language - step:[\""+step+"\"]@"+feature+":"+line);
+            A.isTrue(pass,"$$FeatureName$$ - step:[\""+step+"\"]@"+feature+":"+line);
         }
     }));
 
