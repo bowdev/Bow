@@ -21,31 +21,40 @@ exports = module.exports = nano = function() {
 		delay : function(ms) {
 		  var timer = setTimeout(function(){ /*console.log(timer);*/ }, ms);	
 		},
-		saveState : function() {
-		    fs.writeFile('./config/window-state.json', JSON.stringify(window));
+		saveState : function(state) {
+		//console.log("[BDD][DEBUG] saveState : state - "+JSON.stringify(state));
+		    fs.writeFile('./config/window-state.json', JSON.stringify(state));
 		    self.delay(50);
 		},
 		loadState : function() {
 		    var data = fs.readFileSync('./config/window-state.json');
 			//console.log("[BDD][DEBUG] loadState : data - "+data);
-			if (data) {
-			    window = JSON.parse(data);		
+			if (data && data!="undefined") {
+			    return JSON.parse(data);		
 			}
+                        else {
+                            return {skipStep:true};
+                        }
 		},
 		step_skip : function(test) {
-			window = test.World;
+                    if (test.World!="undefined") {
 			//console.log("[BDD][DEBUG] step_skip: test.World is "+JSON.stringify(test.World));
-		    self.saveState();
+		        window = test.World;
+                    }
+                    else {
+                        window.skipStep = true;
+                    }
+		    self.saveState(window);
 		    if (test && test.testParams && test.testParams.match && test.testParams.feature && test.testParams.line) {
                       var len = String(test.testParams.line).length;
-		      console.log("[BDD] @["+test.testParams.feature+":"+test.testParams.line+"]"+padding(len)+"\033[0;37m--- "+test.testParams.match+"\033[m");
+		      console.log("[BDD] @["+test.testParams.feature+":"+test.testParams.line+"]"+padding(len)+"\033[1;30m--- "+test.testParams.match+"\033[m");
 		      var docStr = test.testParams.documentStrings;
 		      var docLine = test.testParams.documentAtLine;
 		      if (docStr && docLine) {
 		        docStr.forEach(function(line) {
 		          docLine++;
                           var len = String(docLine).length;
-		          console.log("[BDD] @["+test.testParams.feature+":"+docLine+"]"+padding(len)+"\033[0;37m---    "+line+"\033[m");
+		          console.log("[BDD] @["+test.testParams.feature+":"+docLine+"]"+padding(len)+"\033[1;30m---    "+line+"\033[m");
 		        });
 		      }
 		    }
@@ -57,7 +66,7 @@ exports = module.exports = nano = function() {
 				//console.log("[BDD][DEBUG] begin_step: test.World is "+JSON.stringify(test.World));
 		    }
 		    else {
-			    self.loadState();
+			    window = self.loadState();
 			    if (window.skipStep) {
 			        self.step_skip(test);
 					test.World = window;
@@ -70,7 +79,7 @@ exports = module.exports = nano = function() {
 		step_pass : function(test) {
 			//console.log("[BDD][DEBUG] step_pass: test.World is "+JSON.stringify(test.World));
 			window = test.World;
-		    self.saveState();
+		    self.saveState(window);
 		    if (test && test.testParams && test.testParams.match && test.testParams.feature && test.testParams.line) {
                       var len = String(test.testParams.line).length;
 		      console.log("[BDD] @["+test.testParams.feature+":"+test.testParams.line+"]"+padding(len)+"\033[0;32m[.] "+test.testParams.match+"\033[m");
@@ -89,7 +98,7 @@ exports = module.exports = nano = function() {
 			//console.log("[BDD][DEBUG] step_fail: test.World is "+JSON.stringify(test.World));
 			window = test.World;
 		    window.skipStep = true; // skip the remaining steps in the same scenario
-		    self.saveState();
+		    self.saveState(window);
                     var len = String(test.testParams.line).length;
 		    if (test && test.testParams && test.testParams.match && test.testParams.feature && test.testParams.line) {
 		        console.log("[BDD] @["+test.testParams.feature+":"+test.testParams.line+"]"+padding(len)+"\033[0;31m[X] "+test.testParams.match+"\033[m");
