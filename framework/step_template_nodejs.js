@@ -31,4 +31,4 @@ YUI.add("bow-tests", function(Y) {
 
 	// Never "run" the tests, simply add them to the suite. Arrow takes care of running them
 	Y.Test.Runner.add(suite);
-}, "0.1", { requires: ["test", "common"]});
+}, "0.1", { requires: ["test"]});
